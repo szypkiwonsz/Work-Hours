@@ -1,22 +1,12 @@
+from django.contrib.auth import get_user_model
 from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSerializer
-from rest_framework import serializers
 
-from users.models import User
+User = get_user_model()
 
 
-class UserSerializer(BaseUserRegistrationSerializer):
-    """Serializer for User model."""
-    password2 = serializers.CharField(write_only=True)
+class UserCreateSerializer(BaseUserRegistrationSerializer):
+    """Override class of UserCreateSerializer from DJOSER to create user only with email."""
 
     class Meta(BaseUserRegistrationSerializer.Meta):
         model = User
-        fields = ('email', 'password', 'password2')
-        extra_kwargs = {
-            'password': {'write_only': True}
-        }
-
-    def validate(self, attrs):
-        """Function needed to check if two passwords match."""
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({'password': "password fields didn't match."})
-        return attrs
+        fields = ('email', 'password')
