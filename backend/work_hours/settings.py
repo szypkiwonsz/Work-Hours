@@ -121,9 +121,16 @@ REST_FRAMEWORK = {
     ]
 }
 
+# JSON Web Token authentication
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+}
+
 # DJOSER package settings
 
 DJOSER = {
+    'USER_CREATE_PASSWORD_RETYPE': True,
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
