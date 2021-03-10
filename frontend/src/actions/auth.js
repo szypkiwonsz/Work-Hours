@@ -4,6 +4,7 @@ import {
     ACTIVATION_SUCCESS,
     AUTHENTICATED_FAIL,
     AUTHENTICATED_SUCCESS,
+    GET_ERRORS,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
@@ -99,8 +100,17 @@ export const login = (email, password) => async dispatch => {
 
         dispatch(load_user());
     } catch (err) {
+        const errors = {
+            msg: err.response.data,
+            status: err.response.status
+        }
+
         dispatch({
             type: LOGIN_FAIL
+        })
+        dispatch({
+            type: GET_ERRORS,
+            payload: errors
         })
     }
 };
