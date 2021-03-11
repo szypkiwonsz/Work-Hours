@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {createMessage} from './messages';
 import {
     ACTIVATION_FAIL,
     ACTIVATION_SUCCESS,
@@ -97,6 +98,7 @@ export const login = (email, password) => async dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data
         });
+        dispatch(createMessage({loginSuccess: 'Login Success'}))
 
         dispatch(load_user());
     } catch (err) {
