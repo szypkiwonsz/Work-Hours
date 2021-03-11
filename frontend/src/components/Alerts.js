@@ -16,6 +16,7 @@ export class Alerts extends Component {
         }
         if (message !== prevProps.message) {
             if (message.loginSuccess) alert.success(message.loginSuccess);
+            if (message.logoutSuccess) alert.success(message.logoutSuccess);
         }
     }
 

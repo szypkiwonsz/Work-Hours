@@ -210,4 +210,5 @@ export const logout = () => dispatch => {
     dispatch({
         type: LOGOUT
     });
+    dispatch(createMessage({logoutSuccess: 'Logout Success'}))
 };
