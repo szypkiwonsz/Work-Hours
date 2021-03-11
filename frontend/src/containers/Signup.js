@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {signup} from '../actions/auth';
+import {withAlert} from 'react-alert';
 
-const Signup = ({signup, isAuthenticated}) => {
-    const [accountCreate, setAccountCreated] = useState(false);
+const Signup = ({signup, isAuthenticated, alert}) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -20,15 +20,13 @@ const Signup = ({signup, isAuthenticated}) => {
 
         if (password === re_password) {
             signup(email, password, re_password);
-            setAccountCreated(true);
+        } else {
+            alert.error('Given Passwords Do Not Match')
         }
     };
 
     if (isAuthenticated) {
         return <Redirect to='/'/>
-    }
-    if (accountCreate) {
-        return <Redirect to='/login'/>
     }
 
     return (
@@ -84,4 +82,4 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, {signup})(Signup);
+export default connect(mapStateToProps, {signup})(withAlert()(Signup));

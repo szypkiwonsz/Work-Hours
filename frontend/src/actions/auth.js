@@ -134,8 +134,16 @@ export const signup = (email, password, re_password) => async dispatch => {
             payload: res.data
         });
     } catch (err) {
+        const errors = {
+            msg: err.response.data,
+            status: err.response.status
+        }
         dispatch({
             type: SIGNUP_FAIL
+        })
+        dispatch({
+            type: GET_ERRORS,
+            payload: errors
         })
     }
 };

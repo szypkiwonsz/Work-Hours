@@ -3,6 +3,7 @@ import {withAlert} from 'react-alert';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
+// class that displays alerts (messages and errors) gets after making a request from the server
 export class Alerts extends Component {
     static propTypes = {
         error: PropTypes.object.isRequired,
@@ -11,8 +12,12 @@ export class Alerts extends Component {
 
     componentDidUpdate(prevProps) {
         const {error, alert, message} = this.props;
+        // alerts from backend
         if (error !== prevProps.error) {
-            if (error.status === 401) alert.error(error.msg.detail);
+            if (error.status !== 200) {
+                if (error.msg.email) alert.error(`${error.msg.email}`.split('.').join(''));
+                else alert.error(error.msg.detail);
+            }
         }
         if (message !== prevProps.message) {
             if (message.loginSuccess) alert.success(message.loginSuccess);
