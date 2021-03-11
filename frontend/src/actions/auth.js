@@ -133,6 +133,7 @@ export const signup = (email, password, re_password) => async dispatch => {
             type: SIGNUP_SUCCESS,
             payload: res.data
         });
+        dispatch(createMessage({registerSuccess: 'Confirm Your Registration via Link Sent To Your Email'}));
     } catch (err) {
         const errors = {
             msg: err.response.data,
