@@ -23,6 +23,7 @@ export class Alerts extends Component {
             if (message.loginSuccess) alert.success(message.loginSuccess);
             if (message.logoutSuccess) alert.success(message.logoutSuccess);
             if (message.registerSuccess) alert.success(message.registerSuccess);
+            if (message.passwordResetSuccess) alert.success(message.passwordResetSuccess);
         }
     }
 

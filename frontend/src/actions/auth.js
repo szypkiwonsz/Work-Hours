@@ -186,6 +186,10 @@ export const reset_password = (email) => async dispatch => {
         dispatch({
             type: PASSWORD_RESET_SUCCESS
         })
+        dispatch(createMessage({
+            passwordResetSuccess: 'If The Given Email Exists, You Will Receive a Link To ' +
+                'Reset Your Password'
+        }));
     } catch (err) {
         dispatch({
             type: PASSWORD_RESET_FAIL
