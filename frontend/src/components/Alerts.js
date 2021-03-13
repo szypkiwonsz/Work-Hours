@@ -16,6 +16,7 @@ export class Alerts extends Component {
         if (error !== prevProps.error) {
             if (error.status !== 200) {
                 if (error.msg.email) alert.error(`${error.msg.email}`.split('.').join(''));
+                if (error.msg.token) alert.error(`${error.msg.token}`.split('.').join(''));
                 else alert.error(error.msg.detail);
             }
         }
@@ -24,6 +25,7 @@ export class Alerts extends Component {
             if (message.logoutSuccess) alert.success(message.logoutSuccess);
             if (message.registerSuccess) alert.success(message.registerSuccess);
             if (message.passwordResetSuccess) alert.success(message.passwordResetSuccess);
+            if (message.passwordResetConfirmSuccess) alert.success(message.passwordResetConfirmSuccess);
         }
     }
 

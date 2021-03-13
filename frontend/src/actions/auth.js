@@ -212,9 +212,18 @@ export const reset_password_confirm = (uid, token, new_password, re_new_password
         dispatch({
             type: PASSWORD_RESET_CONFIRM_SUCCESS
         })
+        dispatch(createMessage({passwordResetConfirmSuccess: 'Password Reset Successfully'}));
     } catch (err) {
+        const errors = {
+            msg: err.response.data,
+            status: err.response.status
+        }
         dispatch({
             type: PASSWORD_RESET_CONFIRM_FAIL
+        })
+        dispatch({
+            type: GET_ERRORS,
+            payload: errors
         })
     }
 };
