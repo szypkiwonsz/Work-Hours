@@ -23,6 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     """Custom model of user without username (uses email instead)."""
     email = models.EmailField(unique=True)  # change email to unique and blank to false
     is_active = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
 
     objects = CustomUserManager()
 
