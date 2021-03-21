@@ -37,7 +37,7 @@ class Month(models.Model):
 
 class Day(models.Model):
     """Class representing the model of the day for retrieving information on earnings during the day."""
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='days')
     month = models.ForeignKey(Month, on_delete=models.CASCADE, blank=True, related_name='days')
     date = models.DateField()
     work_start_time = models.TimeField()
