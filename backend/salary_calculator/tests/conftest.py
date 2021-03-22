@@ -2,8 +2,8 @@ import datetime
 
 import pytest
 
-from salary_calculator.models import Year, Month, Day, Salary, Payout
-
+from salary_calculator.models import Year, Month, Day, Salary
+from salary_calculator.serializers import DaySerializer, SalarySerializer, PayoutSerializer
 from users.models import User
 
 
@@ -55,3 +55,50 @@ def day(user, salary):
         bonus=120
     )
     return day
+
+
+# fixtures for test_serializers
+@pytest.fixture()
+def day_serializer_data():
+    day_serializer_data = {
+        'id': 1,
+        'date': '2021-01-01',
+        'work_start_time': '08:00:00',
+        'work_end_time': '16:00:00',
+        'bonus': 0.0,
+        'work_time': 480
+    }
+    return day_serializer_data
+
+
+@pytest.fixture()
+def day_serializer(day_serializer_data):
+    return DaySerializer(data=day_serializer_data)
+
+
+@pytest.fixture()
+def salary_serializer_data():
+    salary_serializer_data = {
+        'hourly_earnings': 15,
+        'hourly_earnings_saturdays': 0,
+        'hourly_earnings_sundays': 0
+    }
+    return salary_serializer_data
+
+
+@pytest.fixture()
+def salary_serializer(salary_serializer_data):
+    return SalarySerializer(data=salary_serializer_data)
+
+
+@pytest.fixture()
+def payout_serializer_data():
+    payout_serializer_data = {
+        'monthly_earnings': 2000
+    }
+    return payout_serializer_data
+
+
+@pytest.fixture()
+def payout_serializer(payout_serializer_data):
+    return PayoutSerializer(data=payout_serializer_data)
