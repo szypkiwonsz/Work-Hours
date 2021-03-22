@@ -12,7 +12,7 @@ class Year(models.Model):
     name = models.CharField(max_length=4)
 
     class Meta:
-        unique_together = ('user', 'name',)  # only one year name can be assigned to a user
+        unique_together = ['user', 'name']  # only one year name can be assigned to a user
 
     def __str__(self):
         return f'{self.user}, {self.name}'
@@ -25,7 +25,7 @@ class Month(models.Model):
     name = models.CharField(max_length=9)
 
     class Meta:
-        unique_together = ('user', 'year', 'name',)  # only one year and month name can be assigned to a user
+        unique_together = ['user', 'year', 'name']  # only one year and month name can be assigned to a user
 
     def __str__(self):
         return f'{self.year}, {self.name}'
@@ -46,7 +46,7 @@ class Day(models.Model):
     work_time = models.PositiveIntegerField(blank=True, help_text='given in minutes')
 
     class Meta:
-        unique_together = ('user', 'date',)  # only one day date can be assigned to a user
+        unique_together = ['user', 'date']  # only one day date can be assigned to a user
 
     def __str__(self):
         return f'{self.user}, {self.date}'
