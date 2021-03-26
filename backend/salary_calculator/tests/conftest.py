@@ -1,6 +1,9 @@
 import datetime
 
 import pytest
+from django.contrib.auth.models import AnonymousUser
+from rest_framework.reverse import reverse
+from rest_framework.test import APIRequestFactory
 
 from salary_calculator.models import Year, Month, Day, Salary
 from salary_calculator.serializers import DaySerializer, SalarySerializer, PayoutSerializer
@@ -73,7 +76,10 @@ def day_serializer_data():
 
 @pytest.fixture()
 def day_serializer(day_serializer_data):
-    return DaySerializer(data=day_serializer_data)
+    factory = APIRequestFactory()
+    request = factory.post(reverse('days-list', kwargs={'month_name': 'january'}))
+    request.user = AnonymousUser()
+    return DaySerializer(data=day_serializer_data, context={'request': request})
 
 
 @pytest.fixture()
