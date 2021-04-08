@@ -90,7 +90,7 @@ class Day(models.Model):
 class Salary(models.Model):
     """Class representing the earnings assigned to the selected user."""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    hourly_earnings = models.PositiveIntegerField()
+    hourly_earnings = models.PositiveIntegerField(default=0)
     hourly_earnings_saturdays = models.PositiveIntegerField(default=0)
     hourly_earnings_sundays = models.PositiveIntegerField(default=0)
 

@@ -1,7 +1,8 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
-from salary_calculator.models import Day, Payout
+from salary_calculator.models import Day, Payout, Salary
+from users.models import User
 
 
 @receiver(post_save, sender=Day)

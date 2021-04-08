@@ -40,16 +40,7 @@ def month(user, year):
 
 
 @pytest.fixture()
-def salary(user):
-    salary = Salary.objects.create(
-        user=user,
-        hourly_earnings=15
-    )
-    return salary
-
-
-@pytest.fixture()
-def day(user, salary):
+def day(user):
     day = Day.objects.create(
         user=user,
         date=datetime.date(year=2021, month=1, day=1),

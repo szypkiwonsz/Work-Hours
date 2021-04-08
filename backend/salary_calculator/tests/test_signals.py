@@ -10,7 +10,7 @@ class TestSignals:
         day.bonus = 140
         day.save()
         payout = Payout.objects.get(month=day.month)
-        assert payout.monthly_earnings == 260
+        assert payout.monthly_earnings == 140
 
     def test_remove_payout_monthly_earnings(self, day):
         day.delete()
