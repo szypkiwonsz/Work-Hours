@@ -5,7 +5,7 @@ from django.contrib.auth.models import AnonymousUser
 from rest_framework.reverse import reverse
 from rest_framework.test import APIRequestFactory
 
-from salary_calculator.models import Year, Month, Day, Salary
+from salary_calculator.models import Year, Month, Day
 from salary_calculator.serializers import DaySerializer, SalarySerializer, PayoutSerializer
 from users.models import User
 

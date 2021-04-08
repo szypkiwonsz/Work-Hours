@@ -19,3 +19,10 @@ def remove_payout_monthly_earnings(sender, instance, **kwargs):
     """Signal updating the monthly earnings for the Payout model when removing a day object."""
     payout = Payout.objects.get(month=instance.month)
     payout.save()
+
+
+@receiver(post_save, sender=User)
+def create_user_salary(sender, instance, created, **kwargs):
+    """Signal creating Salary object for when User object is created."""
+    if created:
+        Salary.objects.create(user=instance)
