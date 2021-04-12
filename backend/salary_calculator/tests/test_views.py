@@ -1,7 +1,10 @@
+import datetime
+
 import pytest
 from rest_framework.reverse import reverse
 from rest_framework.test import APIRequestFactory, force_authenticate
 
+from salary_calculator.models import Day
 from salary_calculator.views import DayViewSet
 
 
@@ -45,14 +48,15 @@ class TestDayViewSet:
         day_data = {
             'date': '2021-01-01',
             'work_start_time': '08:00:00',
-            'work_end_time': '16:00:00'
+            'work_end_time': '17:00:00'
         }
         factory = APIRequestFactory()
         request = factory.put(reverse('days-detail', kwargs=kwargs), day_data)
         force_authenticate(request, user)
         view = DayViewSet.as_view({'put': 'update'})
-        response = view(request, month_name=kwargs['month_name'], pk=kwargs['pk'])
-        assert response.status_code == 200
+        view(request, month_name=kwargs['month_name'], pk=kwargs['pk'])
+        day = Day.objects.get(pk=1)
+        assert day.work_end_time == datetime.time(17, 0)
 
     def test_delete_detail(self, user, day):
         kwargs = {'month_name': 'january', 'pk': 1}
