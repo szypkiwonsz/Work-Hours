@@ -4,8 +4,8 @@ import pytest
 from rest_framework.reverse import reverse
 from rest_framework.test import APIRequestFactory, force_authenticate
 
-from salary_calculator.models import Day
-from salary_calculator.views import DayViewSet
+from salary_calculator.models import Day, Salary
+from salary_calculator.views import DayViewSet, SalaryView
 
 
 @pytest.mark.salary_calculator_views
@@ -66,3 +66,32 @@ class TestDayViewSet:
         view = DayViewSet.as_view({'delete': 'destroy'})
         response = view(request, month_name=kwargs['month_name'], pk=kwargs['pk'])
         assert response.status_code == 204
+
+
+@pytest.mark.salary_calculator_views
+class TestSalaryView:
+
+    def test_retrieve(self, user):
+        kwargs = {'user__email': 'test@email.com'}
+        factory = APIRequestFactory()
+        request = factory.get(reverse('salary', kwargs=kwargs))
+        force_authenticate(request, user)
+        view = SalaryView.as_view()
+        response = view(request, user__email=kwargs['user__email'])
+        assert response.status_code == 200
+
+    def test_update(self, user):
+        kwargs = {'user__email': 'test@email.com'}
+        salary_data = {
+            'user': user,
+            'hourly_earnings': 15,
+            'hourly_earnings_saturdays': 0,
+            'hourly_earnings_sundays': 0
+        }
+        factory = APIRequestFactory()
+        request = factory.put(reverse('salary', kwargs=kwargs), salary_data)
+        force_authenticate(request, user)
+        view = SalaryView.as_view()
+        view(request, user__email=kwargs['user__email'])
+        salary = Salary.objects.get(user=user)
+        assert salary.hourly_earnings == 15
