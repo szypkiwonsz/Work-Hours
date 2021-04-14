@@ -103,7 +103,6 @@ class Salary(models.Model):
 
 class Payout(models.Model):
     """Class representing the payout for a given user in the selected month."""
-    salary = models.ForeignKey(Salary, on_delete=models.CASCADE)
     month = models.OneToOneField(Month, on_delete=models.CASCADE, related_name='payout')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     monthly_earnings = models.FloatField(default=0, validators=[MinValueValidator(0.0)])

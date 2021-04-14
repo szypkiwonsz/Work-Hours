@@ -9,7 +9,7 @@ from users.models import User
 def update_payout_monthly_earnings(sender, instance, created, **kwargs):
     """Signal updating the monthly earnings for the Payout object when creating or editing a day object."""
     if created:
-        Payout.objects.get_or_create(salary=instance.user.salary, month=instance.month, user=instance.user)
+        Payout.objects.get_or_create(month=instance.month, user=instance.user)
     payout = Payout.objects.get(month=instance.month)
     payout.save()
 
