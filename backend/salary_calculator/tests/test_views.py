@@ -5,7 +5,7 @@ from rest_framework.reverse import reverse
 from rest_framework.test import APIRequestFactory, force_authenticate
 
 from salary_calculator.models import Day, Salary
-from salary_calculator.views import DayViewSet, SalaryView
+from salary_calculator.views import DayViewSet, SalaryView, PayoutView
 
 
 @pytest.mark.salary_calculator_views
@@ -72,16 +72,14 @@ class TestDayViewSet:
 class TestSalaryView:
 
     def test_retrieve(self, user):
-        kwargs = {'user__email': 'test@email.com'}
         factory = APIRequestFactory()
-        request = factory.get(reverse('salary', kwargs=kwargs))
+        request = factory.get(reverse('salary'))
         force_authenticate(request, user)
         view = SalaryView.as_view()
-        response = view(request, user__email=kwargs['user__email'])
+        response = view(request)
         assert response.status_code == 200
 
     def test_update(self, user):
-        kwargs = {'user__email': 'test@email.com'}
         salary_data = {
             'user': user,
             'hourly_earnings': 15,
@@ -89,9 +87,9 @@ class TestSalaryView:
             'hourly_earnings_sundays': 0
         }
         factory = APIRequestFactory()
-        request = factory.put(reverse('salary', kwargs=kwargs), salary_data)
+        request = factory.put(reverse('salary'), salary_data)
         force_authenticate(request, user)
         view = SalaryView.as_view()
-        view(request, user__email=kwargs['user__email'])
+        view(request)
         salary = Salary.objects.get(user=user)
         assert salary.hourly_earnings == 15
