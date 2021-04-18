@@ -93,3 +93,17 @@ class TestSalaryView:
         view(request)
         salary = Salary.objects.get(user=user)
         assert salary.hourly_earnings == 15
+
+
+@pytest.mark.salary_calculator_views
+class TestPayoutView:
+    """"The day object automatically creates payout."""
+
+    def test_retrieve(self, user, day):
+        kwargs = {'month__name': 'january'}
+        factory = APIRequestFactory()
+        request = factory.get(reverse('payout', kwargs=kwargs))
+        force_authenticate(request, user)
+        view = PayoutView.as_view()
+        response = view(request, month__name=kwargs['month__name'])
+        assert response.status_code == 200
