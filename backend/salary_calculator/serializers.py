@@ -5,10 +5,11 @@ from salary_calculator.models import Day, Salary, Payout
 
 class DaySerializer(serializers.ModelSerializer):
     """Serializer for the Day model."""
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())  # saving the owner as the logged in user
 
     class Meta:
         model = Day
-        fields = ['id', 'date', 'work_start_time', 'work_end_time', 'bonus', 'work_time']
+        fields = ['id', 'user', 'date', 'work_start_time', 'work_end_time', 'bonus', 'work_time']
 
 
 class SalarySerializer(serializers.ModelSerializer):

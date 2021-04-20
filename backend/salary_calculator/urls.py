@@ -7,8 +7,8 @@ router = routers.SimpleRouter()
 router.register(r'days/(?P<month_name>[^/.]+)', DayViewSet, basename='days')
 
 urlpatterns = [
-    path('salary/<str:user__email>/', SalaryView.as_view(), name='salary'),
-    path('payout/<str:user__email>/<str:month__name>/', PayoutView.as_view(), name='payout')
+    path('salary/', SalaryView.as_view(), name='salary'),
+    path('payout/<str:month__name>/', PayoutView.as_view(), name='payout')
 ]
 
 urlpatterns += router.urls

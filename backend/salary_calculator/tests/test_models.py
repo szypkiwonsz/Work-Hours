@@ -69,9 +69,10 @@ class TestDay:
 
 @pytest.mark.salary_calculator_models
 class TestSalary:
+    """"The user object automatically creates salary."""
 
-    def test_string_representation(self, salary):
-        assert str(salary) == 'test@email.com salary'
+    def test_string_representation(self, user):
+        assert str(user.salary) == 'test@email.com salary'
 
 
 @pytest.mark.salary_calculator_models
@@ -82,7 +83,7 @@ class TestPayout:
         assert str(day.month.payout) == 'test@email.com, 2021, January payout'
 
     def test_save(self, day):
-        assert day.month.payout.monthly_earnings == 240.0
+        assert day.month.payout.monthly_earnings == 120.0
 
     def test_calculate_monthly_earnings(self, day):
-        assert day.month.payout.calculate_monthly_earnings() == 240.0
+        assert day.month.payout.calculate_monthly_earnings() == 120.0
