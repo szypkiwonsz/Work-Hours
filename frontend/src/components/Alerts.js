@@ -17,7 +17,7 @@ export class Alerts extends Component {
             if (error.status !== 200) {
                 if (error.msg.email) alert.error(`${error.msg.email}`.split('.').join(''));
                 if (error.msg.token) alert.error(`${error.msg.token}`.split('.').join(''));
-                else alert.error(error.msg.detail);
+                if (error.msg.detail) alert.error(`${error.msg.detail}`.split('.').join(''));
             }
         }
         if (message !== prevProps.message) {
